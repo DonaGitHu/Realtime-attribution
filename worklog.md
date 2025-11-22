@@ -8,4 +8,5 @@ Day 1:
 - Ran initial queries: event count, event_name frequency event parameters
 - Understood event_params structure and UNNEST
 - Tried various sql queries
+- Selected dataset: bigquery-public-data.ga4_obfuscated_sample_ecommerce
   
