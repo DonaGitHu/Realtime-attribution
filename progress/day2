@@ -1,1 +1,38 @@
+Day 2 — Event Parameters, Items & Basic Reports
+Queries
+1. View item counts (from items array)
+SELECT
+  item.item_name,
+  COUNT(*) AS views
+FROM `bigquery-public-data.ga4_obfuscated_sample_ecommerce.events_20201101`,
+UNNEST(items) AS item
+WHERE event_name = 'view_item'
+GROUP BY item.item_name;
+2. Add to cart with event_name + count
+SELECT 
+  event_name,
+  COUNT(*) AS add_to_cart_count
+FROM `bigquery-public-data.ga4_obfuscated_sample_ecommerce.events_20201101`
+WHERE event_name = 'add_to_cart'
+GROUP BY event_name;
+3. Extract specific item attributes
+SELECT
+  item.item_name,
+  item.price,
+  item.quantity
+FROM `bigquery-public-data.ga4_obfuscated_sample_ecommerce.events_20201101`,
+UNNEST(items) item
+WHERE event_name = 'add_to_cart';
+4. Count add_to_cart by item_name
+SELECT
+  item.item_name,
+  COUNT(*) AS add_to_cart_count
+FROM `bigquery-public-data.ga4_obfuscated_sample_ecommerce.events_20201101`,
+UNNEST(items) AS item
+WHERE event_name = 'add_to_cart'
+GROUP BY item.item_name
+ORDER BY add_to_cart_count DESC;
 
+Notes
+items is another repeated field → UNNEST needed.
+Items contain fields directly (item.item_name), not key-value like event_params.
